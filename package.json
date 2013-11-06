@@ -26,8 +26,10 @@
     "lodash": "~2.2.1"
   },
   "devDependencies": {
-    "expect.js": "~0.2.0",
+    "expect.js": "git://github.com/LearnBoost/expect.js.git#158ad86",
     "mocha": "~1.14.0",
+    "mockery": "~1.4.0",
+    "sinon": "~1.7.3"
   },
   "scripts": {
     "test": "node tests/run.js"
