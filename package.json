@@ -1,0 +1,35 @@
+{
+  "name": "gocardless-client",
+  "description": "The Node.js client library for GoCardless.",
+  "tags": [
+    "payment",
+    "direct debit"
+  ],
+  "version": "0.0.1",
+  "author": {
+    "name": "Andy Appleton",
+    "email": "andy@gocardless.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/gocardless/gocardless-node.git"
+  },
+  "bugs": {
+    "url": "http://github.com/gocardless/gocardless-node/issues"
+  },
+  "engines": [
+    "node >= 0.8.0"
+  ],
+  "main": "lib/gocardless.js",
+  "dependencies": {
+    "request": "~2.27.0",
+    "lodash": "~2.2.1"
+  },
+  "devDependencies": {
+    "expect.js": "~0.2.0",
+    "mocha": "~1.14.0",
+  },
+  "scripts": {
+    "test": "node tests/run.js"
+  }
+}
