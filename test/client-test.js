@@ -8,6 +8,7 @@ describe('Client', function() {
   beforeEach(function() {
     mockery.enable({
       warnOnUnregistered: false,
+      warnOnReplace: false,
       useCleanCache: true
     });
   });
@@ -22,6 +23,34 @@ describe('Client', function() {
     var client = new Client(auth)
     expect(client.auth).to.be(auth);
   });
+
+  function itRegistersAResource(propName, fileName) {
+    fileName = (fileName || propName);
+
+    var resourceStub;
+    var resource = { resource: 'stub' };
+
+    beforeEach(function() {
+      resourceStub = sinon.stub().returns(resource);
+      mockery.registerMock('./resources/' + fileName, resourceStub);
+    });
+
+    it('initializes the resource with the client instance', function() {
+      var client = new Client();
+      expect(resourceStub.args[0][0]).to.be(client);
+    });
+
+    it('exposes the resource to the client', function() {
+      var client = new Client();
+      expect(client[propName]).to.be(resource);
+    });
+  }
+
+  itRegistersAResource('bill');
+  itRegistersAResource('payout');
+  itRegistersAResource('preAuthorization', 'pre-authorization');
+  itRegistersAResource('subscription');
+  itRegistersAResource('user');
 
   describe('#request', function() {
     var client;
