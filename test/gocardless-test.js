@@ -19,10 +19,6 @@ describe('gocardless', function() {
     mockery.disable();
   });
 
-  it('is a function', function() {
-    expect(gocardless).to.be.a(Function);
-  });
-
   var opts;
   describe('with incorrect config options', function() {
     beforeEach(function() {
@@ -57,6 +53,25 @@ describe('gocardless', function() {
       expect(ClientMock.withArgs(opts).calledOnce).to.be.ok();
       expect(returned).to.be.a(ClientMock)
     });
-  });
 
+    describe('in live mode', function() {
+      it('sets live baseUrl', function() {
+        var expected = 'https://gocardless.com/api/v1';
+        gocardless(opts);
+        expect(ClientMock.args[0][0].baseUrl).to.be(expected);
+      });
+    });
+
+    describe('in sandbox mode', function() {
+      beforeEach(function() {
+        opts.sandbox = true;
+      });
+
+      it('sets sandbox baseUrl', function() {
+        var expected = 'https://sandbox.gocardless.com/api/v1';
+        gocardless(opts);
+        expect(ClientMock.args[0][0].baseUrl).to.be(expected);
+      });
+    });
+  });
 });
