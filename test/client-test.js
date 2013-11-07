@@ -18,10 +18,10 @@ describe('Client', function() {
     mockery.disable();
   });
 
-  it('stores auth details', function() {
-    var auth = { auth: 'data' };
-    var client = new Client(auth)
-    expect(client.auth).to.be(auth);
+  it('stores config', function() {
+    var config = { some: 'data' };
+    var client = new Client(config)
+    expect(client.config).to.be(config);
   });
 
   function itRegistersAResource(propName, fileName) {
