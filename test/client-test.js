@@ -78,6 +78,15 @@ describe('Client', function() {
 
       expect(requestMock.args[0][0].headers['Authorization']).to.be(authHeader);
     });
+
+    it('converts path option to a full uri', function() {
+      var opts = { path: '/bills'};
+      var expected = config.baseUrl + opts.path;
+
+      client.request(opts);
+
+      expect(requestMock.args[0][0].uri).to.be(expected);
+    });
   });
 
   function itDelegatesToRequest(httpMethod, clientMethod) {
