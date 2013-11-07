@@ -32,6 +32,6 @@
     "sinon": "~1.7.3"
   },
   "scripts": {
-    "test": "node tests/run.js"
+    "test": "bin/test"
   }
 }
