@@ -63,8 +63,8 @@ describe('Client', function() {
       client = new (require('../lib/client'))(auth);
     });
 
-    it('proxies to request library', function() {
-      var opts = { some: 'options'};
+    it('delegates to request library', function() {
+      var opts = { some: 'options' };
       client.request(opts);
       expect(requestMock.withArgs(opts).calledOnce).to.be.ok();
     });
@@ -76,5 +76,48 @@ describe('Client', function() {
 
       expect(requestMock.args[0][0].headers['Authorization']).to.be(authHeader);
     });
+  });
+
+  function itDelegatesToRequest(httpMethod, clientMethod) {
+    var client;
+    var requestMock;
+    var auth = { token: "SOMETOKEN" };
+    var opts = { some: 'options' };
+
+    beforeEach(function() {
+      requestMock = sinon.spy(function() { return requestMock });
+      mockery.registerMock('request', requestMock);
+      client = new (require('../lib/client'))(auth);
+    });
+
+    it('returns a request', function() {
+      expect(client[clientMethod](opts)).to.be(requestMock)
+    });
+
+    it('delegates to request library', function() {
+      client[clientMethod](opts);
+      expect(requestMock.withArgs(opts).calledOnce).to.be.ok();
+    });
+
+    it('adds a method option', function() {
+      client[clientMethod](opts);
+      expect(requestMock.args[0][0].method).to.be(httpMethod);
+    });
+  }
+
+  describe('#get', function() {
+    itDelegatesToRequest('GET', 'get');
+  });
+
+  describe('#put', function() {
+    itDelegatesToRequest('PUT', 'put');
+  });
+
+  describe('#post', function() {
+    itDelegatesToRequest('POST', 'post');
+  });
+
+  describe('#delete', function() {
+    itDelegatesToRequest('DELETE', 'delete');
   });
 });
