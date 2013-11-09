@@ -95,5 +95,11 @@ describe('Client', function() {
 
       expect(requestMock.args[0][0].uri).to.be(expected);
     });
+
+    it('passes the callback to the request', function() {
+      function cb() {};
+      client.request({}, cb);
+      expect(requestMock.args[0][1]).to.be(cb);
+    });
   });
 });
