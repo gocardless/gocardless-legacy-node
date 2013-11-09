@@ -80,6 +80,13 @@ describe('Client', function() {
       expect(requestMock.args[0][0].headers['Authorization']).to.be(authHeader);
     });
 
+    it('adds Accept header', function() {
+      var opts = { some: 'options'};
+      client.request(opts);
+
+      expect(requestMock.args[0][0].headers['Accept']).to.be('application/json');
+    });
+
     it('converts path option to a full uri', function() {
       var opts = { path: '/bills'};
       var expected = config.baseUrl + opts.path;
