@@ -8,7 +8,7 @@ describe('Client', function() {
   var config;
 
   beforeEach(function() {
-    config = { token: 'DATA', baseUrl: 'http://example.com' };
+    config = { token: 'DATA', baseUrl: 'http://example.com/api' };
 
     mockery.enable({
       warnOnUnregistered: false,
