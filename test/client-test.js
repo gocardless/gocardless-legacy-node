@@ -18,6 +18,7 @@ describe('Client', function() {
   });
 
   afterEach(function() {
+    mockery.deregisterAll();
     mockery.resetCache();
     mockery.disable();
   });

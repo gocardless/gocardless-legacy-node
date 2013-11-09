@@ -15,6 +15,7 @@ describe('gocardless', function() {
   });
 
   afterEach(function() {
+    mockery.deregisterAll();
     mockery.resetCache();
     mockery.disable();
   });
