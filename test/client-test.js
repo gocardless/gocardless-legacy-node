@@ -89,46 +89,4 @@ describe('Client', function() {
       expect(requestMock.args[0][0].uri).to.be(expected);
     });
   });
-
-  function itDelegatesToRequest(httpMethod, clientMethod) {
-    var client;
-    var requestMock;
-    var opts = { some: 'options' };
-
-    beforeEach(function() {
-      requestMock = sinon.spy(function() { return requestMock });
-      mockery.registerMock('request', requestMock);
-      client = new (require('../lib/client'))(config);
-    });
-
-    it('returns a request', function() {
-      expect(client[clientMethod](opts)).to.be(requestMock)
-    });
-
-    it('delegates to request library', function() {
-      client[clientMethod](opts);
-      expect(requestMock.withArgs(opts).calledOnce).to.be.ok();
-    });
-
-    it('adds a method option', function() {
-      client[clientMethod](opts);
-      expect(requestMock.args[0][0].method).to.be(httpMethod);
-    });
-  }
-
-  describe('#get', function() {
-    itDelegatesToRequest('GET', 'get');
-  });
-
-  describe('#put', function() {
-    itDelegatesToRequest('PUT', 'put');
-  });
-
-  describe('#post', function() {
-    itDelegatesToRequest('POST', 'post');
-  });
-
-  describe('#delete', function() {
-    itDelegatesToRequest('DELETE', 'delete');
-  });
 });
