@@ -4,17 +4,19 @@ var expect = require('expect.js');
 var Resource = require('../../lib/resources/resource');
 
 describe('Resource', function() {
-  var basePath, client, resource;
+  var basePath, client, opts, resource;
 
   beforeEach(function() {
     basePath = '/bills';
     client = { request: sinon.spy(), };
-    resource = new Resource(basePath, client);
+    opts = { config: 'options' };
+    resource = new Resource(basePath, client, opts);
   });
 
-  it('keeps a reference to basePath and client', function() {
+  it('keeps a reference to basePath, client and opts', function() {
     expect(resource.basePath).to.be(basePath);
     expect(resource.client).to.be(client);
+    expect(resource.opts).to.be(opts);
   });
 
   function itDelegatesToClient(fnName, httpMethod) {
