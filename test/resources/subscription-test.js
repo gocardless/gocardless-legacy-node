@@ -28,4 +28,21 @@ describe('Subscription resource', function() {
       expect(subscription.get).was.calledWith({ path: subscriptionsPath }, cb);
     });
   });
+
+  describe('#cancel', function() {
+    var id, subscription, cb;
+
+    beforeEach(function() {
+      id = '123';
+      cb = function() {};
+      subscription = subscriptionFactory(null);
+      sinon.stub(subscription, 'put');
+    });
+
+    it('delegates to #put with the correct path and callback', function() {
+      var cancelPath = '/subscriptions/' + id + '/cancel';
+      subscription.cancel({ id: id }, cb);
+      expect(subscription.put).was.calledWith({ path: cancelPath }, cb);
+    });
+  });
 });
