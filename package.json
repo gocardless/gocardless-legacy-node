@@ -29,7 +29,8 @@
     "expect.js": "git://github.com/LearnBoost/expect.js.git#158ad86",
     "mocha": "~1.14.0",
     "mockery": "~1.4.0",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "sinon-expect": "~0.2.0"
   },
   "scripts": {
     "test": "bin/test"
