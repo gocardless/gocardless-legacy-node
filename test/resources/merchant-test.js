@@ -24,7 +24,7 @@ describe('Merchant resource', function() {
 
     it('delegates to #get with ownId and callback', function() {
       merchant.getSelf(cb);
-      expect(merchant.get).was.calledWith(id, cb);
+      expect(merchant.get).was.calledWith({ id: id }, cb);
     });
   });
 });
