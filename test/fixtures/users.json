@@ -1,0 +1,15 @@
+[{
+  "company_name": "BigCo",
+  "created_at":"2013-08-30T15:50:49Z",
+  "email":"accounts@bigco.com",
+  "first_name":"Billy",
+  "id":"123ABC",
+  "last_name":"Bigco"
+}, {
+  "company_name":null,
+  "created_at":"2013-08-30T15:48:01Z",
+  "email":"john@appleseed.com",
+  "first_name":"John",
+  "id":"123DEF",
+  "last_name":"Appleseed"
+}]
