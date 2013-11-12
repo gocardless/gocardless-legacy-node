@@ -60,6 +60,26 @@ describe('Resource requests', function() {
         gocardless.user.index(done);
       });
     });
+
+    describe('Subscription', function() {
+      it('gets index', function(done) {
+        server
+          .get('/api/v1/merchants/' + config.merchant_id + '/subscriptions')
+          .replyWithFile(200, fixtures + '/subscriptions.json');
+
+        gocardless.subscription.index(done);
+      });
+    });
+
+    describe('PreAuthorization', function() {
+      it('gets index', function(done) {
+        server
+          .get('/api/v1/merchants/' + config.merchant_id + '/pre_authorizations')
+          .replyWithFile(200, fixtures + '/pre-authorizations.json');
+
+        gocardless.preAuthorization.index(done);
+      });
+    });
   }
 
   describe('in live mode', function() {
