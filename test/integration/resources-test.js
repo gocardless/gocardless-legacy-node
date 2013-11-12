@@ -65,6 +65,15 @@ describe('Resource requests', function() {
           pre_authorization_id: '123'
         }, done);
       });
+
+      it('retries a failed bill', function(done) {
+        var billId = '123ABC';
+        server
+          .post('/api/v1/bills/' + billId + '/retry')
+          .replyWithFile(201, fixtures + '/bill.json');
+
+        gocardless.bill.retry({ id: billId }, done);
+      });
     });
 
     describe('Merchant', function() {
