@@ -32,7 +32,7 @@ describe('Bill resource', function() {
     });
   });
 
-  describe('#crete', function() {
+  describe('#create', function() {
     beforeEach(function() {
       sinon.stub(bill, 'post');
     });
@@ -45,6 +45,18 @@ describe('Bill resource', function() {
 
       bill.create(params, cb);
       expect(bill.post).was.calledWith({ json: { bill: params } }, cb);
+    });
+  });
+
+  describe('#retry', function() {
+    beforeEach(function() {
+      sinon.stub(bill, 'post');
+    });
+
+    it('delegates to #post with the correct path and callback', function() {
+      var retryPath = '/bills/' + id + '/retry';
+      bill.retry({ id: id }, cb);
+      expect(bill.post).was.calledWith({ path: retryPath }, cb);
     });
   });
 });
