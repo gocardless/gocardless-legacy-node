@@ -39,6 +39,14 @@ describe('Resource requests', function() {
 
         gocardless.bill.get({ id: billId }, done);
       });
+
+      it('gets index', function(done) {
+        server
+          .get('/api/v1/merchants/' + config.merchant_id + '/bills')
+          .replyWithFile(200, fixtures + '/bills.json');
+
+        gocardless.bill.index(done);
+      });
     });
 
     describe('Merchant', function() {
