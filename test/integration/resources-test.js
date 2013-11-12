@@ -62,6 +62,14 @@ describe('Resource requests', function() {
     });
 
     describe('Subscription', function() {
+      it('gets one', function(done) {
+        server
+          .get('/api/v1/subscriptions/123')
+          .replyWithFile(200, fixtures + '/subscription.json');
+
+        gocardless.subscription.get({ id: 123 }, done);
+      });
+
       it('gets index', function(done) {
         server
           .get('/api/v1/merchants/' + config.merchant_id + '/subscriptions')
@@ -72,6 +80,14 @@ describe('Resource requests', function() {
     });
 
     describe('PreAuthorization', function() {
+      it('gets one', function(done) {
+        server
+          .get('/api/v1/pre_authorizations/123')
+          .replyWithFile(200, fixtures + '/pre-authorization.json');
+
+        gocardless.preAuthorization.get({ id: 123 }, done);
+      });
+
       it('gets index', function(done) {
         server
           .get('/api/v1/merchants/' + config.merchant_id + '/pre_authorizations')
