@@ -57,6 +57,21 @@ describe('Client', function() {
   itRegistersAResource('subscription');
   itRegistersAResource('preAuthorization', 'pre-authorization');
 
+  describe('bill resource', function() {
+    var resourceStub, config;
+
+    beforeEach(function() {
+      config = { baseUrl: '', merchant_id: "123" };
+      resourceStub = sinon.stub();
+      mockery.registerMock('./resources/bill', resourceStub);
+    });
+
+    it('passes merchant ID to the resource', function() {
+      var client = new Client(config);
+      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
+    });
+  });
+
   describe('user resource', function() {
     var resourceStub, config;
 
