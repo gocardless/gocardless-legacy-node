@@ -102,6 +102,21 @@ describe('Client', function() {
     });
   });
 
+  describe('pre authorizations resource', function() {
+    var resourceStub, config;
+
+    beforeEach(function() {
+      config = { baseUrl: '', merchant_id: "123" };
+      resourceStub = sinon.stub();
+      mockery.registerMock('./resources/pre-authorization', resourceStub);
+    });
+
+    it('passes merchant ID to the resource', function() {
+      var client = new Client(config);
+      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
+    });
+  });
+
   describe('#request', function() {
     var client;
     var requestMock;
