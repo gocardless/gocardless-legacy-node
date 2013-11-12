@@ -77,6 +77,14 @@ describe('Resource requests', function() {
 
         gocardless.subscription.index(done);
       });
+
+      it('cancels one', function(done) {
+        server
+          .put('/api/v1/subscriptions/123/cancel')
+          .replyWithFile(200, fixtures + '/subscription.json');
+
+        gocardless.subscription.cancel({ id: 123 }, done);
+      });
     });
 
     describe('PreAuthorization', function() {
@@ -94,6 +102,14 @@ describe('Resource requests', function() {
           .replyWithFile(200, fixtures + '/pre-authorizations.json');
 
         gocardless.preAuthorization.index(done);
+      });
+
+      it('cancels one', function(done) {
+        server
+          .put('/api/v1/pre_authorizations/123/cancel')
+          .replyWithFile(200, fixtures + '/pre-authorization.json');
+
+        gocardless.preAuthorization.cancel({ id: 123 }, done);
       });
     });
   }
