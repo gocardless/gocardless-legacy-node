@@ -47,6 +47,24 @@ describe('Resource requests', function() {
 
         gocardless.bill.index(done);
       });
+
+      it('creates a new bill', function(done) {
+        var expectedParams = {
+          bill: {
+            amount: '10.0',
+            pre_authorization_id: '123'
+          }
+        };
+
+        server
+          .post('/api/v1/bills', expectedParams)
+          .replyWithFile(201, fixtures + '/bill.json');
+
+        gocardless.bill.create({
+          amount: '10.0',
+          pre_authorization_id: '123'
+        }, done);
+      });
     });
 
     describe('Merchant', function() {
