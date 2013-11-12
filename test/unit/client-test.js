@@ -44,6 +44,11 @@ describe('Client', function() {
       expect(resourceStub.args[0][0]).to.be(client);
     });
 
+    it('initializes the resource with merchant ID', function() {
+      var client = new Client(config);
+      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
+    });
+
     it('exposes the resource to the client', function() {
       var client = new Client(config);
       expect(client[propName]).to.be(resource);
@@ -56,81 +61,6 @@ describe('Client', function() {
   itRegistersAResource('merchant');
   itRegistersAResource('subscription');
   itRegistersAResource('preAuthorization', 'pre-authorization');
-
-  describe('bill resource', function() {
-    var resourceStub, config;
-
-    beforeEach(function() {
-      config = { baseUrl: '', merchant_id: "123" };
-      resourceStub = sinon.stub();
-      mockery.registerMock('./resources/bill', resourceStub);
-    });
-
-    it('passes merchant ID to the resource', function() {
-      var client = new Client(config);
-      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
-    });
-  });
-
-  describe('user resource', function() {
-    var resourceStub, config;
-
-    beforeEach(function() {
-      config = { baseUrl: '', merchant_id: "123" };
-      resourceStub = sinon.stub();
-      mockery.registerMock('./resources/user', resourceStub);
-    });
-
-    it('passes merchant ID to the resource', function() {
-      var client = new Client(config);
-      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
-    });
-  });
-
-  describe('merchant resource', function() {
-    var resourceStub, config;
-
-    beforeEach(function() {
-      config = { baseUrl: '', merchant_id: "123" };
-      resourceStub = sinon.stub();
-      mockery.registerMock('./resources/merchant', resourceStub);
-    });
-
-    it('passes merchant ID to the resource', function() {
-      var client = new Client(config);
-      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
-    });
-  });
-
-  describe('subscription resource', function() {
-    var resourceStub, config;
-
-    beforeEach(function() {
-      config = { baseUrl: '', merchant_id: "123" };
-      resourceStub = sinon.stub();
-      mockery.registerMock('./resources/subscription', resourceStub);
-    });
-
-    it('passes merchant ID to the resource', function() {
-      var client = new Client(config);
-      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
-    });
-  });
-
-  describe('pre authorizations resource', function() {
-    var resourceStub, config;
-
-    beforeEach(function() {
-      config = { baseUrl: '', merchant_id: "123" };
-      resourceStub = sinon.stub();
-      mockery.registerMock('./resources/pre-authorization', resourceStub);
-    });
-
-    it('passes merchant ID to the resource', function() {
-      var client = new Client(config);
-      expect(resourceStub.args[0][1]).to.be(config.merchant_id);
-    });
-  });
 
   describe('#request', function() {
     var client;
