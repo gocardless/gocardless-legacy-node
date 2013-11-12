@@ -76,16 +76,6 @@ describe('Resource requests', function() {
       });
     });
 
-    describe('Merchant', function() {
-      it('gets self', function(done) {
-        server
-          .get('/api/v1/merchants/' + config.merchant_id)
-          .replyWithFile(200, fixtures + '/merchant.json');
-
-        gocardless.merchant.getSelf(done);
-      });
-    });
-
     describe('User', function() {
       it('gets index', function(done) {
         server
@@ -93,6 +83,16 @@ describe('Resource requests', function() {
           .replyWithFile(200, fixtures + '/users.json');
 
         gocardless.user.index(done);
+      });
+    });
+
+    describe('Merchant', function() {
+      it('gets self', function(done) {
+        server
+          .get('/api/v1/merchants/' + config.merchant_id)
+          .replyWithFile(200, fixtures + '/merchant.json');
+
+        gocardless.merchant.getSelf(done);
       });
     });
 
