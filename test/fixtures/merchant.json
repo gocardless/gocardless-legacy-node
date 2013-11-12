@@ -1,0 +1,22 @@
+{
+  "balance": "15.87",
+  "created_at": "2012-10-24T08:52:56Z",
+  "description": "Test merchant",
+  "email": "merchant@example.com",
+  "first_name": "Test",
+  "last_name": "Merchant",
+  "name": "test Merchant",
+  "hide_variable_amount": false,
+  "id": "3456MNOP",
+  "next_payout_amount": null,
+  "next_payout_date": null,
+  "pending_balance": "0.0",
+  "sub_resource_uris": {
+    "users": "https://gocardless.com/api/v1/merchants/3456MNOP/users",
+    "bills": "https://gocardless.com/api/v1/merchants/3456MNOP/bills",
+    "pre_authorizations": "https://gocardless.com/api/v1/merchants/3456MNOP/pre_authorizations",
+    "subscriptions": "https://gocardless.com/api/v1/merchants/3456MNOP/subscriptions",
+    "payouts": "https://gocardless.com/api/v1/merchants/3456MNOP/payouts"
+  },
+  "uri": "https://gocardless.com/api/v1/merchants/3456MNOP"
+}
