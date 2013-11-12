@@ -96,6 +96,25 @@ describe('Resource requests', function() {
       });
     });
 
+    describe('Payout', function() {
+      it('gets one', function(done) {
+        var payoutId = '0ABC123456';
+        server
+          .get('/api/v1/payouts/' + payoutId)
+          .replyWithFile(200, fixtures + '/payout.json');
+
+        gocardless.payout.get({ id: payoutId }, done);
+      });
+
+      it('gets index', function(done) {
+        server
+          .get('/api/v1/merchants/' + config.merchant_id + '/payouts')
+          .replyWithFile(200, fixtures + '/payouts.json');
+
+        gocardless.payout.index(done);
+      });
+    });
+
     describe('Subscription', function() {
       it('gets one', function(done) {
         server
