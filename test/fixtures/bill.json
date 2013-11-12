@@ -1,0 +1,23 @@
+{
+  "amount": "10.00",
+  "amount_minus_fees": "9.90",
+  "can_be_cancelled": false,
+  "can_be_retried": false,
+  "charge_customer_at": "2013-11-11",
+  "created_at": "2013-11-05T13:11:42Z",
+  "currency": "GBP",
+  "description": null,
+  "gocardless_fees": "0.10",
+  "id": "0ABC123456",
+  "is_setup_fee": false,
+  "merchant_id": "0ABC123456",
+  "name": "Testing Payment",
+  "paid_at": "2013-11-12T12:01:18Z",
+  "partner_fees": "0.0",
+  "payout_id": null,
+  "source_id": "0ABC123456",
+  "source_type": "pre_authorization",
+  "status": "paid",
+  "uri": "https://gocardless.com/api/v1/bills/0ABC123456",
+  "user_id": "0ABC123456"
+}
