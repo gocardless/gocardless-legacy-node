@@ -4,8 +4,8 @@ var mockery = require('mockery');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
-var merchantFactory = require('../../lib/resources/merchant');
-var Resource = require('../../lib/resources/resource');
+var merchantFactory = require('../../../lib/resources/merchant');
+var Resource = require('../../../lib/resources/resource');
 
 describe('Merchant resource', function() {
   it('is a Resource', function() {

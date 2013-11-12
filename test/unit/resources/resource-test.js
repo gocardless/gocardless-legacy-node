@@ -3,7 +3,7 @@ var expect = require('expect.js');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
-var Resource = require('../../lib/resources/resource');
+var Resource = require('../../../lib/resources/resource');
 
 describe('Resource', function() {
   var basePath, client, opts, resource;

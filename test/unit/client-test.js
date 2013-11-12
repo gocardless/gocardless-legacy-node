@@ -2,7 +2,7 @@ var sinon = require('sinon');
 var expect = require('expect.js');
 var mockery = require('mockery');
 
-var Client = require('../lib/client');
+var Client = require('../../lib/client');
 
 describe('Client', function() {
   var config;
@@ -109,7 +109,7 @@ describe('Client', function() {
     beforeEach(function() {
       requestMock = sinon.spy();
       mockery.registerMock('request', requestMock);
-      client = new (require('../lib/client'))(config);
+      client = new (require('../../lib/client'))(config);
     });
 
     it('delegates to request library', function() {

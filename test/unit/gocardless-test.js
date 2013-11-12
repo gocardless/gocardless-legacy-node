@@ -2,8 +2,8 @@ var sinon = require('sinon');
 var expect = require('expect.js');
 var mockery = require('mockery');
 
-var gocardless = require('../lib/gocardless.js');
-var Client = require('../lib/client');
+var gocardless = require('../../lib/gocardless.js');
+var Client = require('../../lib/client');
 
 describe('gocardless', function() {
 
@@ -38,7 +38,7 @@ describe('gocardless', function() {
     beforeEach(function() {
       ClientMock = sinon.spy(Client);
       mockery.registerMock('./client', ClientMock);
-      gocardless = require('../lib/gocardless');
+      gocardless = require('../../lib/gocardless');
 
       opts = { app_id: '', app_secret: '', token: '', merchant_id: '' };
     });
