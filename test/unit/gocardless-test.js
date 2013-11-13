@@ -57,7 +57,7 @@ describe('gocardless', function() {
 
     describe('in live mode', function() {
       it('sets live baseUrl', function() {
-        var expected = 'https://gocardless.com/api/v1';
+        var expected = 'https://gocardless.com';
         gocardless(opts);
         expect(ClientMock.args[0][0].baseUrl).to.be(expected);
       });
@@ -69,7 +69,7 @@ describe('gocardless', function() {
       });
 
       it('sets sandbox baseUrl', function() {
-        var expected = 'https://sandbox.gocardless.com/api/v1';
+        var expected = 'https://sandbox.gocardless.com';
         gocardless(opts);
         expect(ClientMock.args[0][0].baseUrl).to.be(expected);
       });

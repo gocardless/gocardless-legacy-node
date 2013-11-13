@@ -29,8 +29,9 @@ describe('Resource', function() {
       });
 
       it('calls client#request with path and id', function() {
+        var expectedPath = '/api/v1' + basePath + '/' + 1;
         resource[fnName]({ id: 1 });
-        expect(client.request.args[0][0].path).to.be(basePath + '/' + 1);
+        expect(client.request.args[0][0].path).to.be(expectedPath);
       });
 
       it('passes the callback to the request', function() {
@@ -43,7 +44,7 @@ describe('Resource', function() {
     describe('with no id', function() {
       it('requests the index', function() {
         resource[fnName]();
-        expect(client.request.args[0][0].path).to.be(basePath);
+        expect(client.request.args[0][0].path).to.be('/api/v1' + basePath);
       });
 
       it('passes the callback to the request', function() {

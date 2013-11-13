@@ -46,7 +46,7 @@ describe('Bill resource', function() {
     });
 
     it('delegates to #post with the correct path and callback', function() {
-      var retryPath = '/bills/' + id + '/retry';
+      var retryPath = '/api/v1/bills/' + id + '/retry';
       bill.retry({ id: id }, cb);
       expect(bill.post).was.calledWith({ path: retryPath }, cb);
     });

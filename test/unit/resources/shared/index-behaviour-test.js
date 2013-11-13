@@ -15,7 +15,7 @@ module.exports = function cancelBehaviour(resourceFactory) {
     });
 
     it('delegates to #get with the correct path and callback', function() {
-      var resourcesPath = '/merchants/' + id + resource.basePath;
+      var resourcesPath = '/api/v1/merchants/' + id + resource.basePath;
       resource.index(cb);
       expect(resource.get).was.calledWith({ path: resourcesPath }, cb);
     });

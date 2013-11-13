@@ -15,7 +15,7 @@ module.exports = function authorizationBehaviour(resourceFactory) {
     });
 
     it('delegates to #put with the correct path and callback', function() {
-      var cancelPath = resource.basePath + '/' + id + '/cancel';
+      var cancelPath = '/api/v1' + resource.basePath + '/' + id + '/cancel';
       resource.cancel({ id: id }, cb);
       expect(resource.put).was.calledWith({ path: cancelPath }, cb);
     });

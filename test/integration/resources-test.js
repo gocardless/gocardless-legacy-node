@@ -7,8 +7,8 @@ var GoCardless = require('../../lib/gocardless');
 
 var fixtures = path.resolve('test/fixtures');
 var environmentUrls = {
-  live: 'https://gocardless.com/',
-  sandbox: 'https://sandbox.gocardless.com/'
+  live: 'https://gocardless.com',
+  sandbox: 'https://sandbox.gocardless.com'
 };
 
 describe('Resource requests', function() {
