@@ -40,6 +40,32 @@ describe('Bill resource', function() {
     });
   });
 
+  describe('#createOneOff', function() {
+    var billParams;
+
+    beforeEach(function() {
+      sinon.stub(bill, 'get');
+
+      billParams = {
+        merchant_id: id,
+        amount: '10.00'
+      };
+    });
+
+    it('delegates to #get with correct query params and callback', function() {
+      var expectedQuery = { bill: billParams };
+
+      bill.createOneOff(billParams, cb);
+
+      expect(bill.get).was.calledWith({
+        qs: expectedQuery,
+        path: '/connect/bills/new'
+      }, cb);
+    });
+
+    it('signs the request');
+  });
+
   describe('#retry', function() {
     beforeEach(function() {
       sinon.stub(bill, 'post');
