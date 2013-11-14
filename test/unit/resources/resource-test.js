@@ -35,7 +35,7 @@ describe('Resource', function() {
       });
 
       it('passes the callback to the request', function() {
-        function cb() {};
+        function cb() {}
         resource[fnName](1, cb);
         expect(client.request.args[0][1]).to.be(cb);
       });
@@ -48,7 +48,7 @@ describe('Resource', function() {
       });
 
       it('passes the callback to the request', function() {
-        function cb() {};
+        function cb() {}
         resource[fnName](cb);
         expect(client.request.args[0][1]).to.be(cb);
       });

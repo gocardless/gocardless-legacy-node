@@ -1,6 +1,5 @@
 var sinon = require('sinon');
 var expect = require('expect.js');
-var mockery = require('mockery');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 

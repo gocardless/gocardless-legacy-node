@@ -24,7 +24,7 @@ describe('Client', function() {
   });
 
   it('stores config', function() {
-    var client = new Client(config)
+    var client = new Client(config);
     expect(client.config).to.be(config);
   });
 
@@ -83,14 +83,14 @@ describe('Client', function() {
       client.request(opts);
       var authHeader = 'bearer ' + config.token;
 
-      expect(requestMock.args[0][0].headers['Authorization']).to.be(authHeader);
+      expect(requestMock.args[0][0].headers.Authorization).to.be(authHeader);
     });
 
     it('adds Accept header', function() {
       var opts = { some: 'options'};
       client.request(opts);
 
-      expect(requestMock.args[0][0].headers['Accept']).to.be('application/json');
+      expect(requestMock.args[0][0].headers.Accept).to.be('application/json');
     });
 
     it('converts path option to a full uri', function() {
@@ -103,7 +103,7 @@ describe('Client', function() {
     });
 
     it('passes the callback to the request', function() {
-      function cb() {};
+      function cb() {}
       client.request({}, cb);
       expect(requestMock.args[0][1]).to.be(cb);
     });

@@ -52,7 +52,7 @@ describe('gocardless', function() {
       ClientMock.withArgs(opts);
 
       expect(ClientMock.withArgs(opts).calledOnce).to.be.ok();
-      expect(returned).to.be.a(ClientMock)
+      expect(returned).to.be.a(ClientMock);
     });
 
     describe('in live mode', function() {

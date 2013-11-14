@@ -1,9 +1,8 @@
 var path = require('path');
 
-var expect = require('expect.js');
 var nock = require('nock');
 
-var GoCardless = require('../../lib/gocardless');
+var gocardlessFactory = require('../../lib/gocardless');
 
 var fixtures = path.resolve('test/fixtures');
 var environmentUrls = {
@@ -24,7 +23,7 @@ describe('Resource requests', function() {
         sandbox: (env === 'sandbox')
       };
 
-      gocardless = GoCardless(config);
+      gocardless = gocardlessFactory(config);
       server = nock(environmentUrls[env])
                  .matchHeader('Accept', 'application/json')
                  .matchHeader('Authorization', 'bearer ' + config.token);
