@@ -1,8 +1,26 @@
+var sinon = require('sinon');
 var expect = require('expect.js');
+var mockery = require('mockery');
+
+expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
 var Signer = require('../../../lib/helpers/request-signer');
 
 describe('Signer', function() {
+  beforeEach(function() {
+    mockery.enable({
+      warnOnUnregistered: false,
+      warnOnReplace: false,
+      useCleanCache: true
+    });
+  });
+
+  afterEach(function() {
+    mockery.deregisterAll();
+    mockery.resetCache();
+    mockery.disable();
+  });
+
   describe('#toQuery', function() {
     describe('given a regular hash', function() {
       it('converts to key value pairs joined by a =', function() {
@@ -32,6 +50,34 @@ describe('Signer', function() {
         var expected = 'a%5B%5D=mad&a%5B%5D%5B%5D=data&a%5B%5D%5B%5D=structure';
         expect(Signer.toQuery(params)).to.eql(expected);
       });
+    });
+  });
+
+  describe('#signature', function() {
+    var crypto, secret, query;
+
+    beforeEach(function() {
+      secret = 'supersecuresecret';
+      query = 'key=val';
+
+      crypto = {};
+      crypto.createHmac = sinon.stub().returns(crypto);
+      crypto.update = sinon.stub().returns(crypto);
+      crypto.digest = sinon.stub().returns(crypto);
+
+      mockery.registerMock('crypto', crypto);
+      Signer = require('../../../lib/helpers/request-signer');
+    });
+
+    // TODO: There must be a better way to test this
+    it('does a huge stubbed method chain', function() {
+      Signer.signature(query, secret);
+
+      expect(crypto.createHmac).was.calledWith('sha256', secret);
+      expect(crypto.update).was.calledWith(query);
+      expect(crypto.digest).was.calledWith('hex');
+
+      sinon.assert.callOrder(crypto.createHmac, crypto.update, crypto.digest);
     });
   });
 });
