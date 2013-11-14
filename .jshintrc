@@ -14,7 +14,7 @@
     "regexp"        : false,
     "undef"         : true,
     "unused"        : true,
-    "strict"        : true,
+    "strict"        : false,
     "camelcase"     : false,
     "trailing"      : true,
     "indent"        : 2,
@@ -66,9 +66,6 @@
 
     "maxerr"        : 100,
 
-    globals         : {
-    },
-
     "predef"        : [
       "__dirname",
       "element",
@@ -90,7 +87,6 @@
       "define",
       "grunt",
       "phantom",
-      "WebPage",
-      "_"
+      "WebPage"
     ]
 }
