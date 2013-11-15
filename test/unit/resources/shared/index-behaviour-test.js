@@ -3,14 +3,14 @@ var expect = require('expect.js');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
-module.exports = function cancelBehaviour(resourceFactory) {
+module.exports = function cancelBehaviour(Resource) {
   describe('#index', function() {
     var id, resource, cb;
 
     beforeEach(function() {
       id = '123';
       cb = function() {};
-      resource = resourceFactory(null, id);
+      resource = new Resource(null, { merchantId: id });
       sinon.stub(resource, 'get');
     });
 

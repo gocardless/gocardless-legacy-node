@@ -12,7 +12,8 @@ describe('Resource', function() {
     basePath = '/bills';
     client = { request: sinon.spy(), };
     opts = { config: 'options' };
-    resource = new Resource(basePath, client, opts);
+    resource = new Resource(client, opts);
+    resource.basePath = basePath;
   });
 
   it('keeps a reference to basePath, client and opts', function() {
