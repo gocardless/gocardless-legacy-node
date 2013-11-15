@@ -53,7 +53,7 @@ describe('Signer', function() {
     });
   });
 
-  describe('#signature', function() {
+  describe('#sign', function() {
     var crypto, secret, query;
 
     beforeEach(function() {
@@ -71,7 +71,7 @@ describe('Signer', function() {
 
     // TODO: There must be a better way to test this
     it('does a huge stubbed method chain', function() {
-      Signer.signature(query, secret);
+      Signer.sign(query, secret);
 
       expect(crypto.createHmac).was.calledWith('sha256', secret);
       expect(crypto.update).was.calledWith(query);
