@@ -73,7 +73,8 @@ describe('Signer', function() {
     it('does a huge stubbed method chain', function() {
       Signer.sign(query, secret);
 
-      expect(crypto.createHmac).was.calledWith('sha256', secret);
+      expect(crypto.createHmac.lastCall.args[0]).to.be('sha256');
+      expect(crypto.createHmac.lastCall.args[1]).to.eql(new Buffer(secret));
       expect(crypto.update).was.calledWith(query);
       expect(crypto.digest).was.calledWith('hex');
 
