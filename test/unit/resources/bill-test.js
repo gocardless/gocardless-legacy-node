@@ -1,27 +1,42 @@
 var sinon = require('sinon');
 var expect = require('expect.js');
+var mockery = require('mockery');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
 var indexBehaviour = require('./shared/index-behaviour-test');
 
-var billFactory = require('../../../lib/resources/bill');
+var Bill = require('../../../lib/resources/bill');
 var Resource = require('../../../lib/resources/resource');
 
 describe('Bill resource', function() {
   var bill, id, cb;
 
   beforeEach(function() {
+    mockery.enable({
+      warnOnUnregistered: false,
+      warnOnReplace: false,
+      useCleanCache: true
+    });
+  });
+
+  afterEach(function() {
+    mockery.deregisterAll();
+    mockery.resetCache();
+    mockery.disable();
+  });
+
+  beforeEach(function() {
     cb = function() {};
     id = '123';
-    bill = billFactory(null, id);
+    bill = new Bill(null, { merchantId: id});
   });
 
   it('is a Resource', function() {
-    expect(billFactory()).to.be.a(Resource);
+    expect(bill).to.be.a(Resource);
   });
 
-  indexBehaviour(billFactory);
+  indexBehaviour(Bill);
 
   describe('#create', function() {
     beforeEach(function() {
@@ -40,19 +55,29 @@ describe('Bill resource', function() {
   });
 
   describe('#createOneOff', function() {
-    var billParams;
+    var billParams, signerMock, signature;
 
     beforeEach(function() {
-      sinon.stub(bill, 'get');
-
       billParams = {
         merchant_id: id,
         amount: '10.00'
       };
+
+      signature = 'ABCXYZ123789';
+
+      signerMock = {};
+      signerMock.toQuery = sinon.stub().returns(billParams);
+      signerMock.sign = sinon.stub().returns(signature);
+      mockery.registerMock('../helpers/request-signer', signerMock);
+
+      Bill = require('../../../lib/resources/bill');
+      bill = new Bill(null, { merchantId: id });
+
+      sinon.stub(bill, 'get');
     });
 
-    it('delegates to #get with correct query params and callback', function() {
-      var expectedQuery = { bill: billParams };
+    it('delegates to #get with signed query params and callback', function() {
+      var expectedQuery = { bill: billParams, signature: signature };
 
       bill.createOneOff(billParams, cb);
 
@@ -61,8 +86,6 @@ describe('Bill resource', function() {
         path: '/connect/bills/new'
       }, cb);
     });
-
-    it('signs the request');
   });
 
   describe('#retry', function() {
