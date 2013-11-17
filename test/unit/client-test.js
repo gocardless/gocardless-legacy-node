@@ -53,21 +53,42 @@ describe('Client', function() {
     });
   }
 
+  itRegistersAResource('user');
+  itRegistersAResource('payout');
+  itRegistersAResource('merchant');
+
   describe('bill', function() {
     itRegistersAResource('bill');
 
-    it('initializes the bill resource with required config', function() {
+    it('initializes the bill resource with connect config', function() {
       var client = new Client(config);
       expect(client.bill.opts.appId).to.be(config.appId);
       expect(client.bill.opts.secret).to.be(config.appSecret);
       expect(client.bill.opts.baseUrl).to.be(config.baseUrl);
     });
   });
-  itRegistersAResource('user');
-  itRegistersAResource('payout');
-  itRegistersAResource('merchant');
-  itRegistersAResource('subscription');
-  itRegistersAResource('preAuthorization', 'pre-authorization');
+
+  describe('subscription', function() {
+    itRegistersAResource('subscription');
+
+    it('initializes the subscription resource with connect config', function() {
+      var client = new Client(config);
+      expect(client.subscription.opts.appId).to.be(config.appId);
+      expect(client.subscription.opts.secret).to.be(config.appSecret);
+      expect(client.subscription.opts.baseUrl).to.be(config.baseUrl);
+    });
+  });
+
+  describe('preAuthorization', function() {
+    itRegistersAResource('preAuthorization', 'pre-authorization');
+
+    it('initializes the preAuthorization resource with connect config', function() {
+      var client = new Client(config);
+      expect(client.preAuthorization.opts.appId).to.be(config.appId);
+      expect(client.preAuthorization.opts.secret).to.be(config.appSecret);
+      expect(client.preAuthorization.opts.baseUrl).to.be(config.baseUrl);
+    });
+  });
 
   describe('#request', function() {
     var client;
