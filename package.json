@@ -23,7 +23,8 @@
   "main": "lib/gocardless.js",
   "dependencies": {
     "request": "~2.27.0",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "qs": "~0.6.5"
   },
   "devDependencies": {
     "expect.js": "git://github.com/LearnBoost/expect.js.git#158ad86",
