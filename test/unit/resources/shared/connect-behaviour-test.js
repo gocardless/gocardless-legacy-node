@@ -27,15 +27,13 @@ module.exports = function connectBehaviour(resourceName, fileName) {
     });
 
     beforeEach(function() {
-      params = {
-        merchantId: merchantId,
-        amount: '10.00'
-      };
+      params = { amount: '10.00' };
 
       signature = 'ABCXYZ123789';
       appId = '123ABC';
       appSecret = '456DEF';
       baseUrl = 'http://example.com';
+      merchantId = '123ABC';
 
       signerMock = {};
       signerMock.toQuery = sinon.stub().returns(params);
@@ -70,7 +68,7 @@ module.exports = function connectBehaviour(resourceName, fileName) {
 
       it('encodes the passed params and adds merchantId', function() {
         expect(parsedQuery[resource.paramName].amount).to.be(params.amount);
-        expect(parsedQuery[resource.paramName].merchantId).to.be(merchantId);
+        expect(parsedQuery[resource.paramName].merchant_id).to.be(merchantId);
       });
 
       it('adds the signature', function() {
