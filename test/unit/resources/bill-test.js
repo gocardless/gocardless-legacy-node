@@ -1,13 +1,11 @@
-var url = require('url');
-
 var sinon = require('sinon');
 var expect = require('expect.js');
 var mockery = require('mockery');
-var qs = require('qs');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
 var indexBehaviour = require('./shared/index-behaviour-test');
+var connectBehaviour = require('./shared/connect-behaviour-test');
 
 var Bill = require('../../../lib/resources/bill');
 var Resource = require('../../../lib/resources/resource');
@@ -40,6 +38,7 @@ describe('Bill resource', function() {
   });
 
   indexBehaviour(Bill);
+  connectBehaviour('bill');
 
   describe('#create', function() {
     beforeEach(function() {
@@ -54,77 +53,6 @@ describe('Bill resource', function() {
 
       bill.create(params, cb);
       expect(bill.post).was.calledWith({ json: { bill: params } }, cb);
-    });
-  });
-
-  describe('#newUrl', function() {
-    var billParams, signerMock, signature, appId, appSecret, baseUrl;
-
-    beforeEach(function() {
-      billParams = {
-        merchantId: id,
-        amount: '10.00'
-      };
-
-      signature = 'ABCXYZ123789';
-      appId = '123ABC';
-      appSecret = '456DEF';
-      baseUrl = 'http://example.com';
-
-      signerMock = {};
-      signerMock.toQuery = sinon.stub().returns(billParams);
-      signerMock.sign = sinon.stub().returns(signature);
-      mockery.registerMock('../helpers/request-signer', signerMock);
-
-      Bill = require('../../../lib/resources/bill');
-      bill = new Bill(null, {
-        merchantId: id,
-        appId: appId,
-        appSecret: appSecret,
-        baseUrl: baseUrl
-      });
-    });
-
-    it('starts with baseUrl', function() {
-      expect(bill.newUrl(billParams).indexOf(baseUrl)).to.be(0);
-    });
-
-    it('has the correct path', function() {
-      var result = url.parse(bill.newUrl(billParams));
-      expect(result.pathname).to.be('/connect/bills/new');
-    });
-
-    describe('the query string', function() {
-      var queryString, parsedQuery;
-
-      beforeEach(function() {
-        queryString = url.parse(bill.newUrl(billParams)).query;
-        parsedQuery = qs.parse(queryString);
-      });
-
-      it('encodes the passed params and adds merchantId', function() {
-        expect(parsedQuery.bill.amount).to.be(billParams.amount);
-        expect(parsedQuery.bill.merchantId).to.be(id);
-      });
-
-      it('adds the signature', function() {
-        expect(parsedQuery.signature).to.be(signature);
-      });
-
-      it('adds a unique nonce', function() {
-        var otherQueryString = url.parse(bill.newUrl(billParams)).query;
-        var otherParsedQuery = qs.parse(otherQueryString);
-
-        expect(parsedQuery.nonce).not.to.eql(undefined);
-        expect(otherParsedQuery.nonce).not.to.eql(undefined);
-        expect(otherParsedQuery.nonce).not.to.eql(parsedQuery.nonce);
-      });
-
-      it('adds the client id and timestamp', function() {
-        var crazyISODateRegex = /^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/;
-        expect(parsedQuery.client_id).to.be(appId);
-        expect(parsedQuery.timestamp).to.match(crazyISODateRegex);
-      });
     });
   });
 
