@@ -74,7 +74,7 @@ describe('Signer', function() {
       Signer.sign(query, secret);
 
       expect(crypto.createHmac.lastCall.args[0]).to.be('sha256');
-      expect(crypto.createHmac.lastCall.args[1]).to.eql(new Buffer(secret));
+      expect(crypto.createHmac.lastCall.args[1]).to.be(secret);
       expect(crypto.update).was.calledWith(query);
       expect(crypto.digest).was.calledWith('hex');
 
