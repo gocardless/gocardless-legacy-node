@@ -1,6 +1,5 @@
 var sinon = require('sinon');
 var expect = require('expect.js');
-var mockery = require('mockery');
 
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
@@ -12,20 +11,6 @@ var Resource = require('../../../lib/resources/resource');
 
 describe('Bill resource', function() {
   var bill, id, cb;
-
-  beforeEach(function() {
-    mockery.enable({
-      warnOnUnregistered: false,
-      warnOnReplace: false,
-      useCleanCache: true
-    });
-  });
-
-  afterEach(function() {
-    mockery.deregisterAll();
-    mockery.resetCache();
-    mockery.disable();
-  });
 
   beforeEach(function() {
     cb = function() {};

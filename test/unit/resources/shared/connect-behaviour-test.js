@@ -5,10 +5,26 @@ var sinon = require('sinon');
 var expect = require('expect.js');
 var mockery = require('mockery');
 
-module.exports = function connectBehaviour(resourceName) {
+module.exports = function connectBehaviour(resourceName, fileName) {
+  fileName = (fileName || resourceName);
+
   describe('#newUrl', function() {
     var resource, merchantId, params, signerMock, signature, appId, appSecret,
         baseUrl;
+
+    beforeEach(function() {
+      mockery.enable({
+        warnOnUnregistered: false,
+        warnOnReplace: false,
+        useCleanCache: true
+      });
+    });
+
+    afterEach(function() {
+      mockery.deregisterAll();
+      mockery.resetCache();
+      mockery.disable();
+    });
 
     beforeEach(function() {
       params = {
@@ -26,7 +42,7 @@ module.exports = function connectBehaviour(resourceName) {
       signerMock.sign = sinon.stub().returns(signature);
       mockery.registerMock('../../helpers/request-signer', signerMock);
 
-      var Resource = require('../../../../lib/resources/' + resourceName);
+      var Resource = require('../../../../lib/resources/' + fileName);
       resource = new Resource(null, {
         merchantId: merchantId,
         appId: appId,
@@ -53,8 +69,8 @@ module.exports = function connectBehaviour(resourceName) {
       });
 
       it('encodes the passed params and adds merchantId', function() {
-        expect(parsedQuery[resourceName].amount).to.be(params.amount);
-        expect(parsedQuery[resourceName].merchantId).to.be(merchantId);
+        expect(parsedQuery[resource.paramName].amount).to.be(params.amount);
+        expect(parsedQuery[resource.paramName].merchantId).to.be(merchantId);
       });
 
       it('adds the signature', function() {
