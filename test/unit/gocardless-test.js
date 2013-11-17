@@ -40,7 +40,7 @@ describe('gocardless', function() {
       mockery.registerMock('./client', ClientMock);
       gocardless = require('../../lib/gocardless');
 
-      opts = { app_id: '', app_secret: '', token: '', merchant_id: '' };
+      opts = { appId: '', appSecret: '', token: '', merchantId: '' };
     });
 
     afterEach(function() {

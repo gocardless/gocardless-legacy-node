@@ -9,10 +9,10 @@ describe('Client', function() {
 
   beforeEach(function() {
     config = {
-      app_id: 'ABC123',
-      app_secret: 'SECRET',
+      appId: 'ABC123',
+      appSecret: 'SECRET',
       token: 'DATA',
-      merchant_id: '123ABC',
+      merchantId: '123ABC',
       baseUrl: 'http://example.com/api'
     };
 
@@ -49,7 +49,7 @@ describe('Client', function() {
 
     it('initializes the resource with merchant ID', function() {
       var client = new Client(config);
-      expect(client[propName].opts.merchantId).to.be(config.merchant_id);
+      expect(client[propName].opts.merchantId).to.be(config.merchantId);
     });
   }
 
@@ -58,8 +58,8 @@ describe('Client', function() {
 
     it('initializes the bill resource with required config', function() {
       var client = new Client(config);
-      expect(client.bill.opts.appId).to.be(config.app_id);
-      expect(client.bill.opts.secret).to.be(config.app_secret);
+      expect(client.bill.opts.appId).to.be(config.appId);
+      expect(client.bill.opts.secret).to.be(config.appSecret);
       expect(client.bill.opts.baseUrl).to.be(config.baseUrl);
     });
   });

@@ -17,9 +17,9 @@ describe('Resource requests', function() {
     beforeEach(function() {
       config = {
         token:'9012IJKL',
-        app_id: '1234ABCD',
-        app_secret: '5678EFGH',
-        merchant_id:'3456MNOP',
+        appId: '1234ABCD',
+        appSecret: '5678EFGH',
+        merchantId:'3456MNOP',
         sandbox: (env === 'sandbox')
       };
 
@@ -41,7 +41,7 @@ describe('Resource requests', function() {
 
       it('gets index', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id + '/bills')
+          .get('/api/v1/merchants/' + config.merchantId + '/bills')
           .replyWithFile(200, fixtures + '/bills.json');
 
         gocardless.bill.index(done);
@@ -78,7 +78,7 @@ describe('Resource requests', function() {
     describe('User', function() {
       it('gets index', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id + '/users')
+          .get('/api/v1/merchants/' + config.merchantId + '/users')
           .replyWithFile(200, fixtures + '/users.json');
 
         gocardless.user.index(done);
@@ -88,7 +88,7 @@ describe('Resource requests', function() {
     describe('Merchant', function() {
       it('gets self', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id)
+          .get('/api/v1/merchants/' + config.merchantId)
           .replyWithFile(200, fixtures + '/merchant.json');
 
         gocardless.merchant.getSelf(done);
@@ -107,7 +107,7 @@ describe('Resource requests', function() {
 
       it('gets index', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id + '/payouts')
+          .get('/api/v1/merchants/' + config.merchantId + '/payouts')
           .replyWithFile(200, fixtures + '/payouts.json');
 
         gocardless.payout.index(done);
@@ -125,7 +125,7 @@ describe('Resource requests', function() {
 
       it('gets index', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id + '/subscriptions')
+          .get('/api/v1/merchants/' + config.merchantId + '/subscriptions')
           .replyWithFile(200, fixtures + '/subscriptions.json');
 
         gocardless.subscription.index(done);
@@ -151,7 +151,7 @@ describe('Resource requests', function() {
 
       it('gets index', function(done) {
         server
-          .get('/api/v1/merchants/' + config.merchant_id + '/pre_authorizations')
+          .get('/api/v1/merchants/' + config.merchantId + '/pre_authorizations')
           .replyWithFile(200, fixtures + '/pre-authorizations.json');
 
         gocardless.preAuthorization.index(done);
