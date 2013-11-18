@@ -54,6 +54,7 @@ describe('Signer', function() {
   });
 
   describe('#sign', function() {
+    var StubbedSigner;
     var crypto, secret, query;
 
     beforeEach(function() {
@@ -66,12 +67,12 @@ describe('Signer', function() {
       crypto.digest = sinon.stub().returns(crypto);
 
       mockery.registerMock('crypto', crypto);
-      Signer = require('../../../lib/helpers/request-signer');
+      StubbedSigner = require('../../../lib/helpers/request-signer');
     });
 
     // TODO: There must be a better way to test this
     it('does a huge stubbed method chain', function() {
-      Signer.sign(query, secret);
+      StubbedSigner.sign(query, secret);
 
       expect(crypto.createHmac.lastCall.args[0]).to.be('sha256');
       expect(crypto.createHmac.lastCall.args[1]).to.be(secret);
@@ -79,6 +80,38 @@ describe('Signer', function() {
       expect(crypto.digest).was.calledWith('hex');
 
       sinon.assert.callOrder(crypto.createHmac, crypto.update, crypto.digest);
+    });
+  });
+
+  describe('#verify', function() {
+    var secret, signature, params;
+
+    beforeEach(function() {
+      secret = 'secret';
+      params = { some: 'params' };
+    });
+
+    describe('with a valid signature', function() {
+      beforeEach(function() {
+        signature = Signer.sign(Signer.toQuery(params), secret);
+      });
+
+      it('is true', function() {
+        expect(Signer.verify(params, signature, secret)).to.be(true);
+      });
+    });
+
+    describe('with an invalid signature', function() {
+      var otherSecret;
+
+      beforeEach(function() {
+        otherSecret = 'bananas';
+        signature = Signer.sign(Signer.toQuery(params), otherSecret);
+      });
+
+      it('is false', function() {
+        expect(Signer.verify(params, signature, secret)).to.be(false);
+      });
     });
   });
 });
