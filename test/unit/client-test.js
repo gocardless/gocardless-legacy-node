@@ -136,4 +136,49 @@ describe('Client', function() {
       expect(requestMock.args[0][1]).to.be(cb);
     });
   });
+
+  describe('#confirmResource', function() {
+    var client;
+    var requestMock;
+
+    beforeEach(function() {
+      requestMock = sinon.spy();
+      mockery.registerMock('request', requestMock);
+      client = new (require('../../lib/client'))(config);
+    });
+
+    it('posts to the correct url', function() {
+      var expectedUri = config.baseUrl + '/api/v1/confirm';
+      client.confirmResource();
+      expect(requestMock.args[0][0].method).to.be('POST');
+      expect(requestMock.args[0][0].uri).to.be(expectedUri);
+    });
+
+    it('sends passed params as JSON', function() {
+      var params = { some: 'data' };
+      client.confirmResource(params);
+      expect(requestMock.args[0][0].json).to.be(params);
+    });
+
+    it('adds Accept header', function() {
+      client.confirmResource();
+      expect(requestMock.args[0][0].headers).to.eql({
+        Accept: 'application/json'
+      });
+    });
+
+    it('adds basic auth details', function() {
+      client.confirmResource();
+      expect(requestMock.args[0][0].auth).to.eql({
+        user: config.appId,
+        pass: config.appSecret
+      });
+    });
+
+    it('passes a callback', function() {
+      function cb() {}
+      client.confirmResource(null, cb);
+      expect(requestMock.args[0][1]).to.be(cb);
+    });
+  });
 });
