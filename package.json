@@ -32,9 +32,11 @@
     "mockery": "~1.4.0",
     "sinon": "~1.7.3",
     "sinon-expect": "~0.2.0",
-    "nock": "~0.23.0"
+    "nock": "~0.23.0",
+    "jshint": "~2.3.0"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha && npm run jshint",
+    "jshint": "./node_modules/jshint/bin/jshint ./lib ./test"
   }
 }
