@@ -165,6 +165,33 @@ describe('Resource requests', function() {
         gocardless.preAuthorization.cancel({ id: 123 }, done);
       });
     });
+
+    describe('confiming a resource', function() {
+      function confirmResourceOfType(resourceType) {
+        beforeEach(function() {
+          server = nock(environmentUrls[env])
+                     .matchHeader('Accept', 'application/json');
+        });
+
+        it('confirms the resource', function(done) {
+          var id = '123ABC';
+          var expectedParams = {
+            resource_type: resourceType,
+            resource_id: id
+          };
+
+          server.post('/api/v1/confirm', expectedParams).reply(200);
+          gocardless.confirmResource({
+            resource_type: resourceType,
+            resource_id: id
+          }, done);
+        });
+      }
+
+      confirmResourceOfType('bill');
+      confirmResourceOfType('subscription');
+      confirmResourceOfType('pre_authorization');
+    });
   }
 
   describe('in live mode', function() {
