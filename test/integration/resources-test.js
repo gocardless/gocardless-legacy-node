@@ -168,19 +168,28 @@ describe('Resource requests', function() {
 
     describe('confiming a resource', function() {
       function confirmResourceOfType(resourceType) {
+        var id, expectedParams, authHeader;
+
         beforeEach(function() {
+          id = '123ABC';
+          expectedParams = {
+            resource_type: resourceType,
+            resource_id: id
+          };
+
+          var auth = config.appId + ':' + config.appSecret;
+          authHeader = new Buffer(auth).toString('base64');
+
           server = nock(environmentUrls[env])
                      .matchHeader('Accept', 'application/json');
         });
 
         it('confirms the resource', function(done) {
-          var id = '123ABC';
-          var expectedParams = {
-            resource_type: resourceType,
-            resource_id: id
-          };
+          server
+            .matchHeader('Authorization', 'Basic ' + authHeader)
+            .post('/api/v1/confirm', expectedParams)
+            .reply(200);
 
-          server.post('/api/v1/confirm', expectedParams).reply(200);
           gocardless.confirmResource({
             resource_type: resourceType,
             resource_id: id
