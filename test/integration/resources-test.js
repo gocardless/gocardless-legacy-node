@@ -47,6 +47,15 @@ describe('Resource requests', function() {
         gocardless.bill.index(done);
       });
 
+      it('gets paginated index', function(done) {
+        var query = '?page=2&per_page=10';
+        server
+          .get('/api/v1/merchants/' + config.merchantId + '/bills' + query)
+          .replyWithFile(200, fixtures + '/bills.json');
+
+        gocardless.bill.index({ page: 2, per_page: 10 }, done);
+      });
+
       it('creates a new bill', function(done) {
         var expectedParams = {
           bill: {
@@ -112,6 +121,15 @@ describe('Resource requests', function() {
 
         gocardless.payout.index(done);
       });
+
+      it('gets paginated index', function(done) {
+        var query = '?page=2&per_page=10';
+        server
+          .get('/api/v1/merchants/' + config.merchantId + '/payouts' + query)
+          .replyWithFile(200, fixtures + '/payouts.json');
+
+        gocardless.payout.index({ page: 2, per_page: 10 }, done);
+      });
     });
 
     describe('Subscription', function() {
@@ -129,6 +147,16 @@ describe('Resource requests', function() {
           .replyWithFile(200, fixtures + '/subscriptions.json');
 
         gocardless.subscription.index(done);
+      });
+
+      it('gets paginated index', function(done) {
+        var query = '?page=2&per_page=10';
+        var id = config.merchantId;
+        server
+          .get('/api/v1/merchants/' + id + '/subscriptions' + query)
+          .replyWithFile(200, fixtures + '/subscriptions.json');
+
+        gocardless.subscription.index({ page: 2, per_page: 10 }, done);
       });
 
       it('cancels one', function(done) {
@@ -155,6 +183,16 @@ describe('Resource requests', function() {
           .replyWithFile(200, fixtures + '/pre-authorizations.json');
 
         gocardless.preAuthorization.index(done);
+      });
+
+      it('gets paginated index', function(done) {
+        var query = '?page=2&per_page=10';
+        var id = config.merchantId;
+        server
+          .get('/api/v1/merchants/' + id + '/pre_authorizations' + query)
+          .replyWithFile(200, fixtures + '/pre-authorizations.json');
+
+        gocardless.preAuthorization.index({ page: 2, per_page: 10 }, done);
       });
 
       it('cancels one', function(done) {
