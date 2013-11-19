@@ -89,4 +89,22 @@ describe('Resource', function() {
   describe('#del', function() {
     itDelegatesToClient('del', 'DELETE');
   });
+
+  describe('#find', function() {
+    beforeEach(function() {
+      sinon.spy(resource, 'get');
+    });
+
+    afterEach(function() {
+      resource.get.restore();
+    });
+
+    it('delegates to #get', function() {
+      function cb() {}
+      resource.find(1, cb);
+
+      expect(resource.get.args[0][0].id).to.be(1);
+      expect(resource.get.args[0][1]).to.be(cb);
+    });
+  });
 });

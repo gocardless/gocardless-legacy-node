@@ -36,7 +36,7 @@ describe('Resource requests', function() {
           .get('/api/v1/bills/' + billId)
           .replyWithFile(200, fixtures + '/bill.json');
 
-        gocardless.bill.get({ id: billId }, done);
+        gocardless.bill.find(billId, done);
       });
 
       it('gets index', function(done) {
@@ -102,7 +102,7 @@ describe('Resource requests', function() {
           .get('/api/v1/payouts/' + payoutId)
           .replyWithFile(200, fixtures + '/payout.json');
 
-        gocardless.payout.get({ id: payoutId }, done);
+        gocardless.payout.find(payoutId, done);
       });
 
       it('gets index', function(done) {
@@ -120,7 +120,7 @@ describe('Resource requests', function() {
           .get('/api/v1/subscriptions/123')
           .replyWithFile(200, fixtures + '/subscription.json');
 
-        gocardless.subscription.get({ id: 123 }, done);
+        gocardless.subscription.find(123, done);
       });
 
       it('gets index', function(done) {
@@ -146,7 +146,7 @@ describe('Resource requests', function() {
           .get('/api/v1/pre_authorizations/123')
           .replyWithFile(200, fixtures + '/pre-authorization.json');
 
-        gocardless.preAuthorization.get({ id: 123 }, done);
+        gocardless.preAuthorization.find(123, done);
       });
 
       it('gets index', function(done) {
