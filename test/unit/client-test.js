@@ -4,6 +4,7 @@ var mockery = require('mockery');
 
 var Client = require('../../lib/client');
 var Signer = require('../../lib/helpers/request-signer');
+var constants = require('../../lib/constants');
 
 describe('Client', function() {
   var config;
@@ -120,6 +121,14 @@ describe('Client', function() {
       client.request(opts);
 
       expect(requestMock.args[0][0].headers.Accept).to.be('application/json');
+    });
+
+    it('adds User-Agent header', function() {
+      var opts = { some: 'options'};
+      client.request(opts);
+
+      expect(requestMock.args[0][0].headers['User-Agent'])
+        .to.be('gocardless-node/v' + constants.VERSION);
     });
 
     it('converts path option to a full uri', function() {
