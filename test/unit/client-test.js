@@ -3,6 +3,7 @@ var expect = require('expect.js');
 var mockery = require('mockery');
 
 var Client = require('../../lib/client');
+var Signer = require('../../lib/helpers/request-signer');
 
 describe('Client', function() {
   var config;
@@ -179,6 +180,12 @@ describe('Client', function() {
       function cb() {}
       client.confirmResource(null, cb);
       expect(requestMock.args[0][1]).to.be(cb);
+    });
+  });
+
+  describe('#verifySignature', function() {
+    it('is Signer.verify', function() {
+      expect(new Client(config).verifySignature).to.be(Signer.verify);
     });
   });
 });
