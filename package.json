@@ -5,7 +5,7 @@
     "payment",
     "direct debit"
   ],
-  "version": "0.0.1",
+  "version": "0.0.1-beta",
   "author": {
     "name": "Andy Appleton",
     "email": "andy@gocardless.com"
