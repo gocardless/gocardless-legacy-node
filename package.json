@@ -1,5 +1,5 @@
 {
-  "name": "gocardless-client",
+  "name": "gocardless",
   "description": "The Node.js client library for GoCardless.",
   "tags": [
     "payment",
