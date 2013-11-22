@@ -97,8 +97,8 @@ describe('Signer', function() {
       });
 
       it('is true', function() {
-        params.secret = secret;
-        expect(Signer.verify(params, signature)).to.be(true);
+        params.signature = signature;
+        expect(Signer.verify(params, secret)).to.be(true);
       });
     });
 
@@ -111,8 +111,8 @@ describe('Signer', function() {
       });
 
       it('is false', function() {
-        params.secret = secret;
-        expect(Signer.verify(params, signature)).to.be(false);
+        params.signature = signature;
+        expect(Signer.verify(params, secret)).to.be(false);
       });
     });
   });
