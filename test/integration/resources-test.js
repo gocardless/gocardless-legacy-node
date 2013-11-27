@@ -1,8 +1,10 @@
 var path = require('path');
 
 var nock = require('nock');
+var expect = require('expect.js');
 
 var gocardlessFactory = require('../../lib/gocardless');
+var Signer = require('../../lib/helpers/request-signer');
 
 var fixtures = path.resolve('test/fixtures');
 var environmentUrls = {
@@ -206,11 +208,11 @@ describe('Resource requests', function() {
 
     describe('confiming a resource', function() {
       function confirmResourceOfType(resourceType) {
-        var id, expectedParams, authHeader;
+        var id, params, authHeader;
 
         beforeEach(function() {
           id = '123ABC';
-          expectedParams = {
+          params = {
             resource_type: resourceType,
             resource_id: id
           };
@@ -222,16 +224,39 @@ describe('Resource requests', function() {
                      .matchHeader('Accept', 'application/json');
         });
 
-        it('confirms the resource', function(done) {
-          server
-            .matchHeader('Authorization', 'Basic ' + authHeader)
-            .post('/api/v1/confirm', expectedParams)
-            .reply(200);
+        describe('with a good signature', function() {
+          beforeEach(function() {
+            var query = Signer.toQuery(params);
+            params.signature = Signer.sign(query, config.appSecret);
+          });
 
-          gocardless.confirmResource({
-            resource_type: resourceType,
-            resource_id: id
-          }, done);
+          it('confirms the resource', function(done) {
+            server
+              .matchHeader('Authorization', 'Basic ' + authHeader)
+              .post('/api/v1/confirm', {
+                resource_id: '123ABC',
+                resource_type: resourceType
+              }).reply(200);
+
+            gocardless.confirmResource(params, done);
+          });
+        });
+
+        describe('with a bad signature', function() {
+          beforeEach(function() {
+            var query = Signer.toQuery({ hacked: 'params' });
+            params.signature = Signer.sign(query, config.appSecret);
+          });
+
+          it('does not confirm the resource', function(done) {
+            server.post('/api/v1/confirm').reply(200);
+
+            gocardless.confirmResource(params, function(err) {
+              expect(server.isDone()).to.be(false);
+              expect(err).to.be.a(Error);
+              done();
+            });
+          });
         });
       }
 
