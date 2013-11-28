@@ -2,6 +2,8 @@ var sinon = require('sinon');
 var expect = require('expect.js');
 var mockery = require('mockery');
 
+expect = require('sinon-expect').enhance(expect, sinon, 'was');
+
 var Client = require('../../lib/client');
 var Signer = require('../../lib/helpers/request-signer');
 var constants = require('../../lib/constants');
@@ -150,51 +152,72 @@ describe('Client', function() {
   describe('#confirmResource', function() {
     var client;
     var requestMock;
+    var params;
 
     beforeEach(function() {
       requestMock = sinon.spy();
       mockery.registerMock('request', requestMock);
       client = new (require('../../lib/client'))(config);
+      params = { resource_id: 123, resource_type: 'bill' };
     });
 
-    it('posts to the correct url', function() {
-      var expectedUri = config.baseUrl + '/api/v1/confirm';
-      client.confirmResource();
-      expect(requestMock.args[0][0].method).to.be('POST');
-      expect(requestMock.args[0][0].uri).to.be(expectedUri);
-    });
+    describe('given a bad signature', function() {
+      beforeEach(function() {
+        params.signature = Signer.sign(Signer.toQuery({a:1}), config.appSecret);
+      });
 
-    it('sends passed params as JSON', function() {
-      var params = { some: 'data' };
-      client.confirmResource(params);
-      expect(requestMock.args[0][0].json).to.be(params);
-    });
+      it('does not make the confirm request', function() {
+        client.confirmResource(params);
+        expect(requestMock).was.notCalled();
+      });
 
-    it('adds Accept header', function() {
-      client.confirmResource();
-      expect(requestMock.args[0][0].headers).to.eql({
-        Accept: 'application/json'
+      it('calls the callback with an error', function() {
+        var cb = sinon.spy();
+        client.confirmResource(params, cb);
+        expect(cb.args[0][0]).to.be.a(Error);
       });
     });
 
-    it('adds basic auth details', function() {
-      client.confirmResource();
-      expect(requestMock.args[0][0].auth).to.eql({
-        user: config.appId,
-        pass: config.appSecret
+    describe('given a good signature', function() {
+      beforeEach(function() {
+        params.signature = Signer.sign(Signer.toQuery(params), config.appSecret);
       });
-    });
 
-    it('passes a callback', function() {
-      function cb() {}
-      client.confirmResource(null, cb);
-      expect(requestMock.args[0][1]).to.be(cb);
-    });
-  });
+      it('posts to the correct url', function() {
+        var expectedUri = config.baseUrl + '/api/v1/confirm';
+        client.confirmResource(params);
+        expect(requestMock.args[0][0].method).to.be('POST');
+        expect(requestMock.args[0][0].uri).to.be(expectedUri);
+      });
 
-  describe('#verifySignature', function() {
-    it('is Signer.verify', function() {
-      expect(new Client(config).verifySignature).to.be(Signer.verify);
+      it('passes resource_type and resource_id params as JSON', function() {
+        client.confirmResource(params);
+        expect(requestMock.args[0][0].json).to.eql({
+          resource_id: params.resource_id,
+          resource_type: params.resource_type
+        });
+      });
+
+      it('adds Accept header', function() {
+        client.confirmResource(params);
+        expect(requestMock.args[0][0].headers).to.eql({
+          Accept: 'application/json'
+        });
+      });
+
+      it('adds basic auth details', function() {
+        client.confirmResource(params);
+        expect(requestMock.args[0][0].auth).to.eql({
+          user: config.appId,
+          pass: config.appSecret
+        });
+      });
+
+      it('passes a callback', function() {
+        function cb() {}
+        client.confirmResource(params, cb);
+        expect(requestMock.args[0][1]).to.be(cb);
+      });
     });
   });
 });
