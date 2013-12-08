@@ -218,4 +218,19 @@ describe('Client', function() {
       });
     });
   });
+
+  describe('#webhookValid', function() {
+    var client;
+
+    beforeEach(function() {
+      client = new Client(config);
+    });
+
+    it('delegates to Signer.verify with appSecret', function() {
+      sinon.spy(Signer, 'verify');
+      var params = { some: 'data' };
+      client.webhookValid(params);
+      expect(Signer.verify).was.calledWith(params, config.appSecret);
+    });
+  });
 });
