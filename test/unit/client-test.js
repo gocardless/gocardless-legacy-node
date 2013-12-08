@@ -200,9 +200,7 @@ describe('Client', function() {
 
       it('adds Accept header', function() {
         client.confirmResource(params);
-        expect(requestMock.args[0][0].headers).to.eql({
-          Accept: 'application/json'
-        });
+        expect(requestMock.args[0][0].headers.Accept).to.be('application/json');
       });
 
       it('adds basic auth details', function() {
