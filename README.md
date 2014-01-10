@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gocardless/gocardless-node.png)](https://travis-ci.org/gocardless/gocardless-node)
 
-## Version 1.0.0-beta4 note
+## Version 1.0.0-beta5 note
 
 This replaces the previous [gocardless npm module](https://npmjs.org/package/gocardless/0.1.1) and is not API compatible. It will be released as 1.0.
 
