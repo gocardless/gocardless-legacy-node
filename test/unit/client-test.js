@@ -228,9 +228,11 @@ describe('Client', function() {
 
     it('delegates to Signer.verify with appSecret', function() {
       sinon.spy(Signer, 'verify');
-      var params = { some: 'data' };
+      var params = {
+        payload: { some: 'data' }
+      };
       client.webhookValid(params);
-      expect(Signer.verify).was.calledWith(params, config.appSecret);
+      expect(Signer.verify).was.calledWith(params.payload, config.appSecret);
     });
   });
 });
