@@ -89,6 +89,34 @@ module.exports = function connectBehaviour(resourceName, fileName) {
         expect(parsedQuery.client_id).to.be(appId);
         expect(parsedQuery.timestamp).to.match(crazyISODateRegex);
       });
+
+      describe('non-preauth, subscription or bill parms', function() {
+        beforeEach(function() {
+          params = {
+            amount: '10',
+            state: 'id=123',
+            redirect_uri: 'http://example.com/redirect',
+            cancel_uri: 'http://example.com/cancel'
+          };
+          queryString = url.parse(resource.newUrl(params)).query;
+          parsedQuery = qs.parse(queryString);
+        });
+
+        it('extracts state out of the resource params', function() {
+          expect(parsedQuery.state).to.be('id=123');
+          expect(parsedQuery[resource.paramName].state).to.be(undefined);
+        });
+
+        it('extracts redirect_uri out of the resource params', function() {
+          expect(parsedQuery.redirect_uri).to.be('http://example.com/redirect');
+          expect(parsedQuery[resource.paramName].redirect_uri).to.be(undefined);
+        });
+
+        it('extracts cancel_uri out of the resource params', function() {
+          expect(parsedQuery.cancel_uri).to.be('http://example.com/cancel');
+          expect(parsedQuery[resource.paramName].cancel_uri).to.be(undefined);
+        });
+      });
     });
   });
 };
