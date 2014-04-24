@@ -52,4 +52,16 @@ describe('Bill resource', function() {
       expect(bill.post).was.calledWith({ path: retryPath }, cb);
     });
   });
+
+  describe('#refund', function() {
+    beforeEach(function() {
+      sinon.stub(bill, 'post');
+    });
+
+    it('delegates to #post with the correct path and callback', function() {
+      var refundPath = '/api/v1/bills/' + id + '/refund';
+      bill.refund({ id: id }, cb);
+      expect(bill.post).was.calledWith({ path: refundPath }, cb);
+    });
+  });
 });
