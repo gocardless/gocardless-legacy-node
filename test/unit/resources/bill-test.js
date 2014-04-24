@@ -52,4 +52,16 @@ describe('Bill resource', function() {
       expect(bill.post).was.calledWith({ path: retryPath }, cb);
     });
   });
+
+  describe('#cancel', function() {
+    beforeEach(function() {
+      sinon.stub(bill, 'put');
+    });
+
+    it('delegates to #post with the correct path and callback', function() {
+      var cancelPath = '/api/v1/bills/' + id + '/cancel';
+      bill.cancel({ id: id }, cb);
+      expect(bill.put).was.calledWith({ path: cancelPath }, cb);
+    });
+  });
 });
