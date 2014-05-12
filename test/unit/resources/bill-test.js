@@ -23,6 +23,7 @@ describe('Bill resource', function() {
   });
 
   indexBehaviour(Bill);
+  cancelBehaviour(Bill);
   connectBehaviour('bill');
 
   describe('#create', function() {
@@ -50,18 +51,6 @@ describe('Bill resource', function() {
       var retryPath = '/api/v1/bills/' + id + '/retry';
       bill.retry({ id: id }, cb);
       expect(bill.post).was.calledWith({ path: retryPath }, cb);
-    });
-  });
-
-  describe('#cancel', function() {
-    beforeEach(function() {
-      sinon.stub(bill, 'put');
-    });
-
-    it('delegates to #post with the correct path and callback', function() {
-      var cancelPath = '/api/v1/bills/' + id + '/cancel';
-      bill.cancel({ id: id }, cb);
-      expect(bill.put).was.calledWith({ path: cancelPath }, cb);
     });
   });
 });
