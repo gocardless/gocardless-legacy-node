@@ -4,6 +4,7 @@ var expect = require('expect.js');
 expect = require('sinon-expect').enhance(expect, sinon, 'was');
 
 var indexBehaviour = require('./shared/index-behaviour-test');
+var cancelBehaviour = require('./shared/cancel-behaviour-test');
 var connectBehaviour = require('./shared/connect-behaviour-test');
 
 var Bill = require('../../../lib/resources/bill');
@@ -23,6 +24,7 @@ describe('Bill resource', function() {
   });
 
   indexBehaviour(Bill);
+  cancelBehaviour(Bill);
   connectBehaviour('bill');
 
   describe('#create', function() {
