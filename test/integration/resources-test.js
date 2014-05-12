@@ -84,6 +84,15 @@ describe('Resource requests', function() {
 
         gocardless.bill.retry({ id: billId }, done);
       });
+
+      it('refunds a bill', function(done) {
+        var billId = '123ABC';
+        server
+          .post('/api/v1/bills/' + billId + '/refund')
+          .replyWithFile(201, fixtures + '/bill.json');
+
+        gocardless.bill.refund({ id: billId }, done);
+      });
     });
 
     describe('User', function() {
