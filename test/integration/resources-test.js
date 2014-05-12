@@ -91,7 +91,7 @@ describe('Resource requests', function() {
           .post('/api/v1/bills/' + billId + '/refund')
           .replyWithFile(201, fixtures + '/bill.json');
 
-        gocardless.bill.retry({ id: billId }, done);
+        gocardless.bill.refund({ id: billId }, done);
       });
     });
 
