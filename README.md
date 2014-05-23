@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/gocardless/gocardless-node.png)](https://travis-ci.org/gocardless/gocardless-node)
 
+Requires Node 0.10.x or later.
+
 ## Documentation
 
 Please see the [GoCardless API Docs](https://developer.gocardless.com/node/).
