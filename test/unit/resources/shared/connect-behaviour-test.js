@@ -1,5 +1,5 @@
 var url = require('url');
-var qs = require('qs');
+var qs = require('perry');
 
 var sinon = require('sinon');
 var expect = require('expect.js');
@@ -88,6 +88,20 @@ module.exports = function connectBehaviour(resourceName, fileName) {
         var crazyISODateRegex = /^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/;
         expect(parsedQuery.client_id).to.be(appId);
         expect(parsedQuery.timestamp).to.match(crazyISODateRegex);
+      });
+
+      describe('given a null value', function() {
+        var params, queryString, parsedQuery;
+
+        beforeEach(function() {
+          params = { amount: 10, nested: { nullValue: null } };
+          queryString = url.parse(resource.newUrl(params)).query;
+          parsedQuery = qs.parse(queryString);
+        });
+
+        it('serializes a nested null value correctly', function() {
+          expect(parsedQuery[resource.paramName].nested.nullValue).to.be(null);
+        });
       });
 
       describe('non-preauth, subscription or bill parms', function() {
