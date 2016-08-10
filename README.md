@@ -1,22 +1,9 @@
 # GoCardless Node.js client library
 
-[![Build Status](https://travis-ci.org/gocardless/gocardless-node.png)](https://travis-ci.org/gocardless/gocardless-node)
+__This API library is only for developers who already have an integration using the [Legacy GoCardless API](https://developer.gocardless.com/legacy).__
 
-## Documentation
+If you're starting a new integration, we don't currently have a JavaScript library, but you can integrate using the [REST API](https://developer.gocardless.com).
 
-Please see the [GoCardless API Docs](https://developer.gocardless.com/node/).
+If you're not sure whether this is the right library for you, get in touch - you can reach our developer support team at <api@gocardless.com>.
 
-## Version 1.0.0-beta6 note
-
-This replaces the previous [gocardless npm module](https://npmjs.org/package/gocardless/0.1.1) and is not API compatible. It will be released as 1.0.
-
-## Development dependencies
-```shell
-$ npm install
-```
-
-## Tests
-
-- Run everything: `$ npm test`
-- Run unit and integration tests: `$ mocha`
-- Run jshint: `$ npm run jshint`
+If you're sure this is the library you want to be using, see [DOCUMENTATION.md](https://github.com/gocardless/gocardless-node/blob/master/DOCUMENTATION.md) for documentation and helpful resources.
