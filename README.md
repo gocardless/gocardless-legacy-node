@@ -6,4 +6,4 @@ If you're starting a new integration, we don't currently have a JavaScript libra
 
 If you're not sure whether this is the right library for you, get in touch - you can reach our developer support team at <api@gocardless.com>.
 
-If you're sure this is the library you want to be using, see [DOCUMENTATION.md](https://github.com/gocardless/gocardless-node/blob/master/DOCUMENTATION.md) for documentation and helpful resources.
+If you're sure this is the library you want to be using, see [DOCUMENTATION.md](DOCUMENTATION.md) for documentation and helpful resources.
