@@ -23,7 +23,7 @@
   "main": "lib/gocardless.js",
   "dependencies": {
     "request": "~2.27.0",
-    "lodash": "~2.2.1",
+    "lodash": "~4.17.11",
     "qs": "~0.6.5"
   },
   "devDependencies": {
